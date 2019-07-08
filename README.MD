@@ -138,5 +138,7 @@ require_once '../entity/notify/NotifyHandler.php';
 
 
 $a = new NotifyHandler();
+//get the notification from $a you can  save to database
+
 echo $a->handle();
 ```
