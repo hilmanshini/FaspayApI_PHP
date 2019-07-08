@@ -58,9 +58,9 @@ just like debit function, this function create the payment but user must fill th
     //sample code
         //create the items first
         $item = array();
-        array_push($item, "Racun tikus");
-        array_push($item, "Bubur ayam");
-        array_push($item, "Pil KB");
+        array_push($item, "Item 1");
+        array_push($item, "Item 2");
+        array_push($item, "Item 3");
 
                 //from previous code 
                 $usr = new TestProdUser();
@@ -151,56 +151,91 @@ $paymentWrapper = new FaspayPaymentCreditWrapperProd($usr,
 
 and generate html
 ```php
-echo $w->generateHtml()
+echo $paymentWrapper->generateHtml()
 ```
 
 
 
 # Faspay Credit Capture Payment
-```java
-    String html = new CaptureRequestWrapperProd(new TestUserBaruCredit(), "c0f4dbe47d27490e81a03ee771be6b47", "110B90DB-DA6C-4FEC-8ACD-C1DBF78A2E61", 10000, "ha", "haha@haha.com", "ddddd ", "<<URL NOTIFY>>").generateHtml();
-        try {
-            File temp = File.createTempFile(UUID.randomUUID().toString(), ".html");
 
-            FileOutputStream fos = new FileOutputStream(temp);
-            fos.write(html.getBytes());
-            fos.flush();
-            fos.close();
-            System.out.println();
-            System.out.println(temp.getAbsolutePath());
-           // openFile(temp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+imports
+```php
+require_once '../../credit/entity/capture/CaptureRequest.php';
+require_once '../../credit/entity/capture/CaptureRequestWrapperDev.php';
+require_once '../../credit/TestUser2.php';
+require_once '../../credit/FaspayConfigCreditDev.php';
 ```
 
-this example will show the HTML of your browser via desktop platform, in android you can use WebView
+
+```php
+//create the user
+$user = new TestUser2();  
+//change configuration
+$conf = new FaspayConfigCreditDev();
+//wrap request
+$c = new CaptureRequestWrapperDev($user , "5d078fc52877e", "D4701B33-BED5-404B-BBAC-BA1DBE60F759", "100000", "ada deh", "adade@g.com", "pala lu", "http://programmermiskin.chickenkiller.com/faspay/api/notify");
+//show the html
+echo $c->generateHtml();
+```
+
+
+
+
 
 
 # Faspay Credit Inquiry  Payment
 
-this example will generate the HTML of your browser via desktop platform, in android you can use WebView
 
-```java
-    FaspayConfigCredit conf = new FaspayConfigCreditProd();
-    FaspayUserCredit credit = new TestUserBaruCredit();
-    InquiryRequestCredit d = new InquiryRequestCreditWrapper(conf, credit, "e5f95232e08446cabda1b10ce6deb579", 10000);
-    d.generateHtml()
+
+```php
+    require_once '../../credit/entity/inquiry/InquiryRequestCredit.php';
+    require_once '../../credit/entity/inquiry/InquiryRequestCreditWrapper.php';
+    require_once '../../credit/entity/inquiry/InquiryResponseCredit.php';
+    require_once '../../credit/FaspayConfigCreditDev.php';
+    require_once '../../credit/service/FaspayCreditService.php';
+    require_once '../../credit/service/FaspayCreditServiceImpl.php';
+    require_once '../../credit/FaspayUserCredit.php';
+    require_once '../../credit/TestUser2.php';
+    $user = new TestUser2();  
+    $conf = new FaspayConfigCreditDev();
+    $service = new FaspayCreditServiceImpl($conf);
+    $re = new InquiryRequestCreditWrapper($user,  "5d078fc52877e", 100000);
+
+    echo $service->inquiry($re);
+
 ```
 
 
 
 # Faspay Credit Refund  Payment
-this example will generate the HTML of your browser via desktop platform, in android you can use WebView
-```java
-String html = new RefundRequestWrapperProd(new TetsUser2(), "64ddf6a2dc1347dca59c029e8ea52e30", "FA9A8C87-A5C0-480C-88E2-1C48DC0D55B9", 100000, "merhcant test CC", "haha@haha.com", "ddddd ", "<<URL NOTIFY>>", 100000).generateHtml();
+this example will generate the HTML of php code
+```php
+require_once '../../credit/FaspayUserCredit.php';
+require_once '../../credit/TestUser2.php';
+require_once '../../credit/entity/refund/RefundRequest.php';
+require_once '../../credit/entity/refund/RefundRequestWrapperDev.php';
+$user = new TestUser2();
+$html = new RefundRequestWrapperDev($user, 
+        "5d078fc52877e", 
+        "D4701B33-BED5-404B-BBAC-BA1DBE60F759", 
+        100000, "merhcant test CC", "haha@haha.com", "ddddd ", "<<URL_CALLBACK>>",10000);
+
+echo $html->generateHtml();
 ```
 
 
 
 # Faspay Credit Void  Payment
-```java
-this example will generate the HTML of your browser via desktop platform, in android you can use WebView
+
+
+```php
+this example will generate the HTML of your php code
 # Faspay Credit Void  Payment
-String html = new VoidRequestWrapperProd(new TestUserBaruCredit(), "e5f95232e08446cabda1b10ce6deb579", "042621B9-0FE3-4FDD-9350-97A4C931FF85", 10000, "ha", "haha@haha.com", "ddddd ", "<<URL NOTIFY>>").generateHtml();
+require_once '../../credit/FaspayUserCredit.php';
+require_once '../../credit/TestUser2.php';
+require_once '../../credit/entity/void/VoidRequestCredit.php';
+require_once '../../credit/entity/void/VoidRequestWrapperDev.php';
+$user = new TestUser2();
+$html = new VoidRequestWrapperDev($user, "5d078fc52877e", "D4701B33-BED5-404B-BBAC-BA1DBE60F759", 100000, "merhcant test CC", "haha@haha.com", "ddddd ", "https://programmermiskin.chickenkiller.com/faspay/api/notify");
+echo $html->generateHtml();
 ```
