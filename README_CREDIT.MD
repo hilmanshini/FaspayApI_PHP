@@ -173,7 +173,7 @@ $user = new TestUser2();
 //change configuration
 $conf = new FaspayConfigCreditDev();
 //wrap request
-$c = new CaptureRequestWrapperDev($user , "5d078fc52877e", "D4701B33-BED5-404B-BBAC-BA1DBE60F759", "100000", "ada deh", "adade@g.com", "pala lu", "http://programmermiskin.chickenkiller.com/faspay/api/notify");
+$c = new CaptureRequestWrapperDev($user , "5d078fc52877e", "D4701B33-BED5-404B-BBAC-BA1DBE60F759", "100000", "ada deh", "adade@g.com", "pala lu", "<<URL_CALLBACK>>");
 //show the html
 echo $c->generateHtml();
 ```
