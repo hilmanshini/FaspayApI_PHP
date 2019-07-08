@@ -101,3 +101,23 @@ wrap and create billing
 $requestPaymentWrapper = new FaspayPaymentRequestWrapper($config, $userBillData, $alfaPC, $userData, $shippingBillData);
 echo json_encode($service->createBilling($requestPaymentWrapper));
 ```
+
+
+
+
+# Faspay Debit, cancel payment
+
+
+
+to cancel payment 
+```php
+echo json_encode($service->cancelTransaction(new FaspayPaymentCancelRequestWrapper("8986322540000844","123123","123",$config)));
+```
+
+
+
+to inquirt the status of payment
+
+```php
+echo json_encode($service->inqueryPaymentStatus(new FaspayPaymentStatusRequestWrapper("x","8986322540000844", "123123", $config)));
+```
