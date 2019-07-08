@@ -108,7 +108,7 @@ create the config
 ```php
 //FaspayPaymentCredit::RESPONSE_TYPE_POST see #https://faspay.co.id/docs/index-business.html?json#request-parameter
 
-new FaspayPaymentCreditConfigApp(FaspayPaymentCredit::RESPONSE_TYPE_POST, "http://<<URL CALLBACK>>")
+$configApp = new FaspayPaymentCreditConfigApp(FaspayPaymentCredit::RESPONSE_TYPE_POST, "http://<<URL CALLBACK>>")
 ```
 
 
@@ -123,11 +123,38 @@ create shopper data
 // $expirymonth
 // $expiryyear
 // $phone_no
-new FaspayPaymentCreditShopperData("ha", "ha@ha.com",
+$shopperData = new FaspayPaymentCreditShopperData("ha", "ha@ha.com",
                         "192.168.100.1","desc", "9612361233123", "Test user", 
                         FaspayPaymentCredit::CARD_TYPE_AMEX, 10, "2020", "081236125123");
 ```
-this example will show the HTML of your browser via desktop platform, in android you can use WebView
+
+
+create transaction data
+
+```php
+$transData = new FaspayPaymentCreditTransactionData($usr, uniqid(), "IDR", 100000)
+```
+
+
+wrap it up
+```php
+$paymentWrapper = new FaspayPaymentCreditWrapperProd($usr,
+                $transData,
+                $ShopperData,
+                $configApp,
+                $billData,
+                $shipData,
+                $itemData,
+                $domData,
+                $ccdata);
+```
+
+and generate html
+```php
+echo $w->generateHtml()
+```
+
+
 
 # Faspay Credit Capture Payment
 ```java
