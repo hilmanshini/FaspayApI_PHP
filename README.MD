@@ -114,10 +114,29 @@ to cancel payment
 echo json_encode($service->cancelTransaction(new FaspayPaymentCancelRequestWrapper("8986322540000844","123123","123",$config)));
 ```
 
+# Faspay Debit, jnquiry payment
 
-
-to inquirt the status of payment
+to inquiry the status of payment
 
 ```php
 echo json_encode($service->inqueryPaymentStatus(new FaspayPaymentStatusRequestWrapper("x","8986322540000844", "123123", $config)));
+```
+
+
+# IMPORTANT! Faspay Payment Notification
+when users accept payment or cancel payment the notification of payment status are sent to your server , Contact faspay support to register your callback url notification, 
+
+your callback controller from your http server  must response the request from faspay in the format that suits faspay needs , 
+the format could be generated with this code in your controller
+
+
+
+```php
+
+require_once '../../vendor/autoload.php';
+require_once '../entity/notify/NotifyHandler.php';
+
+
+$a = new NotifyHandler();
+echo $a->handle();
 ```
